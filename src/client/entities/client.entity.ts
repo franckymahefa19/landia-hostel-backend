@@ -1,6 +1,7 @@
 import { SexeEnum } from 'src/enums/sexe.enum';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { TimestampEntity } from '../timestampenities/timestampentities';
+import { Reservation } from 'src/reservation/entities/reservation.entity';
 
 @Entity()
 export class Client extends TimestampEntity {
@@ -35,4 +36,10 @@ export class Client extends TimestampEntity {
 
   @Column()
   nationalite: string;
+
+   @OneToMany(
+    () => Reservation,
+    (reservation) => reservation.client,
+  )
+  reservations: Reservation[];
 }
