@@ -4,6 +4,9 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClientModule } from './client/client.module';
+import { ReservationModule } from './reservation/reservation.module';
+import { ChambreModule } from './chambre/chambre.module';
+import { TypeModule } from './type/type.module';
 
 @Module({
   imports: [
@@ -28,6 +31,9 @@ import { ClientModule } from './client/client.module';
       }),
     }),
     ClientModule,
+    ReservationModule,
+    ChambreModule,
+    TypeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

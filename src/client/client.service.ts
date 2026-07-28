@@ -41,8 +41,8 @@ export class ClientService {
     return this.clientRepository.save(client);
   }
 
-  remove(id: number) {
-    this.clientRepository.delete(id);
+  async remove(id: number) {
+    await this.clientRepository.delete(id);
     return `le client d'id ${id} a été supprimé !`;
   }
 
@@ -57,7 +57,7 @@ export class ClientService {
   async restore(id: number) {
     const result = await this.clientRepository.restore(id);
     if (result.affected === 0) {
-      throw new NotFoundException(`Le client avec l'ID #${id} est introuvable`);
+      throw new NotFoundException(`Le client avec l'ID #${id} est introuvable ou il n'a pas été désactivé`);
     }
     return `le client d'id ${id} a été restoré !`;
   }

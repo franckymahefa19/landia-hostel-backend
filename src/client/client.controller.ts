@@ -41,17 +41,17 @@ export class ClientController {
   }
 
   @Delete('/restore/:id')
-  restore(@Param('id', ParseIntPipe) id: number) {
-    return this.clientService.restore(id);
+  async restore(@Param('id', ParseIntPipe) id: number) {
+    return await this.clientService.restore(id);
   }
 
   @Delete('/softdelete/:id')
-  softremove(@Param('id', ParseIntPipe) id: number) {
-    return this.clientService.softremove(id);
+  async softremove(@Param('id', ParseIntPipe) id: number) {
+    return await this.clientService.softremove(id);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.clientService.remove(id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return await this.clientService.remove(id);
   }
 }
