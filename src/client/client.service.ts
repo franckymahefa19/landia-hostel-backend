@@ -41,8 +41,8 @@ export class ClientService {
     return this.clientRepository.save(client);
   }
 
-  remove(id: number) {
-    this.clientRepository.delete(id);
+  async remove(id: number) {
+    await this.clientRepository.delete(id);
     return `le client d'id ${id} a été supprimé !`;
   }
 

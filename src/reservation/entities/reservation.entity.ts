@@ -1,4 +1,6 @@
+import { Chambre } from 'src/chambre/entities/chambre.entity';
 import { Client } from 'src/client/entities/client.entity';
+import { TimestampEntity } from 'src/client/timestampenities/timestampentities';
 import {
   Column,
   Entity,
@@ -8,7 +10,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Reservation {
+export class Reservation extends TimestampEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -29,4 +31,14 @@ export class Reservation {
   })
   @JoinColumn({ name: 'client_id' })
   client: Client;
+
+  @ManyToOne(() => Chambre, (chambre) => chambre.reservations , {
+    nullable: true,
+    eager: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'chambre_id' })
+  chambre: Chambre;
+
+
 }
