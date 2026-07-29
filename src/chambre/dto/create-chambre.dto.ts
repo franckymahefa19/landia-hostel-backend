@@ -1,4 +1,4 @@
-import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { EtatChambreEnum } from 'src/enums/etat-chambre.enum';
 import { Type as TypeChambre } from 'src/type/entities/type.entity';
 import { Type } from 'class-transformer';
@@ -11,6 +11,10 @@ export class CreateChambreDto {
   @IsOptional()
   @IsString()
   description: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  prix: number;
 
   @IsEnum(EtatChambreEnum, {
     message:

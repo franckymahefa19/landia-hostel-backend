@@ -23,6 +23,9 @@ export class Chambre {
         default: EtatChambreEnum.DISPONIBLE
     })
     etat: string;
+    
+    @Column()
+    prix: number;
 
     @ManyToOne(
         ()=>Type,
