@@ -2,6 +2,7 @@ import { Chambre } from 'src/chambre/entities/chambre.entity';
 import { Client } from 'src/client/entities/client.entity';
 import { TimestampEntity } from 'src/client/timestampenities/timestampentities';
 import { StatuReservationEnum } from 'src/enums/statut-reservation.enum';
+import { Facture } from 'src/facture/entities/facture.entity';
 import { Paiement } from 'src/paiement/entities/paiement.entity';
 import {
   Column,
@@ -9,6 +10,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -33,6 +35,12 @@ export class Reservation extends TimestampEntity {
     default: StatuReservationEnum.EN_ATTENTE
   })
   statut: string;
+
+  @OneToOne(
+    ()=>Facture,
+    facture => facture.reservation
+  )
+  facture: Facture
 
   @ManyToOne(() => Client, (client) => client.reservations, {
     nullable: true,
