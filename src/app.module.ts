@@ -7,6 +7,7 @@ import { ClientModule } from './client/client.module';
 import { ReservationModule } from './reservation/reservation.module';
 import { ChambreModule } from './chambre/chambre.module';
 import { TypeModule } from './type/type.module';
+import { PaiementModule } from './paiement/paiement.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { TypeModule } from './type/type.module';
     ReservationModule,
     ChambreModule,
     TypeModule,
+    PaiementModule,
   ],
   controllers: [AppController],
   providers: [AppService],
