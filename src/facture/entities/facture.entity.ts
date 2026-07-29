@@ -1,8 +1,8 @@
 import { Reservation } from "src/reservation/entities/reservation.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Paiement {
+export class Facture {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -10,17 +10,17 @@ export class Paiement {
     @Column({
         unique: true
     })
-    reference: string; 
+    reference: string;
 
-    @ManyToOne(
+    @OneToOne(
         ()=>Reservation,
-        reservation => reservation.paiements,
+        reservation => reservation.facture,
         {
-            nullable: true,
             eager: true,
             onDelete: 'CASCADE'
         }
     )
-    @JoinColumn({name: 'reservation_id'})
+    @JoinColumn({ name: 'reservation_id'})
     reservation: Reservation
+
 }

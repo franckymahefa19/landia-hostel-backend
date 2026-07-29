@@ -35,7 +35,7 @@ export class ClientService {
     });
 
     if (!client) {
-      throw new NotFoundException(`Le client avec l'ID #${id} est introuvable`);
+      throw new NotFoundException(`Le client avec l'ID ${id} est introuvable`);
     }
 
     return this.clientRepository.save(client);
@@ -49,7 +49,7 @@ export class ClientService {
   async softremove(id: number) {
     const result = await this.clientRepository.softDelete(id);
     if (result.affected === 0) {
-      throw new NotFoundException(`Le client avec l'ID #${id} est introuvable`);
+      throw new NotFoundException(`Le client avec l'ID ${id} est introuvable`);
     }
     return `le client d'id ${id} a été désactivé !`;
   }
@@ -57,7 +57,7 @@ export class ClientService {
   async restore(id: number) {
     const result = await this.clientRepository.restore(id);
     if (result.affected === 0) {
-      throw new NotFoundException(`Le client avec l'ID #${id} est introuvable ou il n'a pas été désactivé`);
+      throw new NotFoundException(`Le client avec l'ID ${id} est introuvable ou il n'a pas été désactivé`);
     }
     return `le client d'id ${id} a été restoré !`;
   }
