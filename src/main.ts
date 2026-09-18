@@ -20,7 +20,9 @@ async function bootstrap() {
     prefix: '/uploads/',
   });
 
-  app.enableCors()
+  app.enableCors({
+    origin: true,
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Landia Hostel API')

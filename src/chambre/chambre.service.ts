@@ -4,6 +4,8 @@ import { UpdateChambreDto } from './dto/update-chambre.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Chambre } from './entities/chambre.entity';
 import { Repository } from 'typeorm';
+import { join } from 'path';
+import { existsSync, unlinkSync } from 'fs';
 
 @Injectable()
 export class ChambreService {
@@ -12,8 +14,25 @@ export class ChambreService {
     private readonly chambreRepository: Repository<Chambre>,
   ) {}
 
-  async create(createChambreDto: CreateChambreDto): Promise<Chambre> {
-    return await this.chambreRepository.save(createChambreDto);
+  async create(
+    createChambreDto: CreateChambreDto,
+    image1?: Express.Multer.File,
+    image2?: Express.Multer.File,
+    image3?: Express.Multer.File,
+    image4?: Express.Multer.File,
+  ): Promise<Chambre> {
+    const chambre = await this.chambreRepository.create({
+      description: createChambreDto.description,
+      etat: createChambreDto.etat,
+      nom: createChambreDto.nom,
+      prix: createChambreDto.prix,
+      type: createChambreDto.type,
+      image1: image1 ? `/uploads/chambres/${image1.filename}` : undefined,
+      image2: image2 ? `/uploads/chambres/${image2.filename}` : undefined,
+      image3: image3 ? `/uploads/chambres/${image3.filename}` : undefined,
+      image4: image4 ? `/uploads/chambres/${image4.filename}` : undefined,
+    });
+    return await this.chambreRepository.save(chambre);
   }
 
   async findAll(): Promise<Chambre[]> {
@@ -57,6 +76,10 @@ export class ChambreService {
   async update(
     id: number,
     updateChambreDto: UpdateChambreDto,
+    image1?: Express.Multer.File,
+    image2?: Express.Multer.File,
+    image3?: Express.Multer.File,
+    image4?: Express.Multer.File,
   ): Promise<Chambre> {
     const chambre = await this.chambreRepository.preload({
       id,
@@ -65,6 +88,25 @@ export class ChambreService {
     if (!chambre) {
       throw new NotFoundException(`la chambre d'id ${id} est introuvable !`);
     }
+
+    const changeImage = (prop: any) => {
+      if (chambre[prop]) {
+        const oldImagePath = join(
+          process.cwd(),
+          chambre[prop].replace(/^[/\\]+/, ''),
+        );
+        if (existsSync(oldImagePath)) {
+          unlinkSync(oldImagePath);
+        }
+      }
+      chambre[prop] = `/uploads/chambres/${prop.filename}`;
+    };
+
+    if (image1) changeImage(image1);
+    if (image2) changeImage(image2);
+    if (image3) changeImage(image3);
+    if (image4) changeImage(image4);
+
     return await this.chambreRepository.save(chambre);
   }
 
