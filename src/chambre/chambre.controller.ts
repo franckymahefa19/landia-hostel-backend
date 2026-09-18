@@ -7,11 +7,13 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  Query,
 } from '@nestjs/common';
 import { ChambreService } from './chambre.service';
 import { CreateChambreDto } from './dto/create-chambre.dto';
 import { UpdateChambreDto } from './dto/update-chambre.dto';
 import { Chambre } from './entities/chambre.entity';
+import { PaginationDto } from './dto/pagination-dto';
 
 @Controller('chambre')
 export class ChambreController {
@@ -23,8 +25,12 @@ export class ChambreController {
   }
 
   @Get()
-  async findAll(): Promise<Chambre[]> {
-    return await this.chambreService.findAll();
+  async findAll(@Query() pagination: PaginationDto) {
+    return await this.chambreService.paginatedFindAll(
+      pagination.page,
+      pagination.limit,
+      pagination.search,
+    );
   }
 
   @Get(':id')

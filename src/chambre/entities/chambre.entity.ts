@@ -1,10 +1,11 @@
 import { EtatChambreEnum } from "src/enums/etat-chambre.enum";
 import { Reservation } from "src/reservation/entities/reservation.entity";
+import { TimestampEntities } from "src/TimeStampEntities/TimeStampEntities";
 import { Type } from "src/type/entities/type.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Chambre {
+export class Chambre extends TimestampEntities {
 
     @PrimaryGeneratedColumn()
     id: number;

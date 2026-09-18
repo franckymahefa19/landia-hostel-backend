@@ -34,6 +34,11 @@ export class Client extends TimestampEntity {
   })
   sexe: string;
 
+  @Column({
+    nullable: true
+  })
+  image: string;
+
   @Column()
   nationalite: string;
 
